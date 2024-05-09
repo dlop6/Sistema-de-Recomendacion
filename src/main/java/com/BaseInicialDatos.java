@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class BaseInicialDatos {
     public static void main(String[] args) {
         System.out.println("Elegir opción:");
         System.out.println("1. Crear nodos y relaciones");
@@ -198,6 +198,4 @@ public class Main {
             }
         }
     }
-
-
 }
