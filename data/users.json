@@ -1,0 +1,24 @@
+{"users": [
+    {
+        "movies": [
+            "Matrix",
+            "Star Wars"
+        ],
+        "favorites": [
+            "Matrix",
+            "Star Wars"
+        ],
+        "User": "Pedro"
+    },
+    {
+        "movies": [
+            "Movie1",
+            "Movie2"
+        ],
+        "favorites": [
+            "Favorite1",
+            "Favorite2"
+        ],
+        "name": "Maria"
+    }
+]}
