@@ -1,6 +1,5 @@
 package com.ValidacionDatos;
 
-
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,13 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-
 public class APIMovies {
 
     static String apiKey = "b02b9a4c";
 
-
-    public static ArrayList<String> getMovie(String movieTitle) {
+    public static ArrayList<String> getMovieData(String movieTitle) {
 
         try {
             // Construir la URL para hacer la solicitud al servicio OMDB API
@@ -51,7 +48,7 @@ public class APIMovies {
             String director = jsonResponse.getString("Director");
             String actors = jsonResponse.getString("Actors");
             String genre = jsonResponse.getString("Genre");
-            
+
             // Get only the first value of actors and genre
             ArrayList<String> movieData = new ArrayList<>();
             movieData.add(title);
@@ -67,6 +64,5 @@ public class APIMovies {
 
         }
     }
-
 
 }

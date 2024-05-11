@@ -6,34 +6,30 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class BaseInicialDatos {
-    public static void main(String[] args) {
-        System.out.println("Elegir opción:");
-        System.out.println("1. Crear nodos y relaciones");
-        System.out.println("2. Borrar nodos y relaciones");
-        Scanner scanner = new Scanner(System.in);
-        int opcion = scanner.nextInt();
-        if (opcion == 1) {
-            createNodesandConnections();
-        } else if (opcion == 2) {
-            DeleteAllNodesAndRelationships.main(args);
-        }
-    }
+    
+    private static Driver driver;
+    private static String csvFile;
 
-    public static void createNodesandConnections() {
-        String csvFile = "movies.csv";
-        String line;
-        Driver driver = GraphDatabase.driver(
+
+    public BaseInicialDatos(String fileName) {
+        csvFile = "pruebasneo4j\\src\\data\\" + fileName;
+        
+        driver = GraphDatabase.driver(
                 "neo4j+s://9c5d5c00.databases.neo4j.io", //"bolt://localhost:7687",
                 AuthTokens.basic(
                         "neo4j",
                         "xgq5hyZRycODNp5U7cQuTg2GwIWNePhoKn4ZOLZoE30"
 
                 ));
+    }
+
+    public static void createNodesandConnections() {
+       String line;
+       BaseInicialDatos baseInicialDatos = new BaseInicialDatos("movies.csv");
 
         // Creación de Nodos
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
@@ -59,7 +55,7 @@ public class BaseInicialDatos {
                     }
                 }
                 if (!peliculaEncontrada) {
-                    crearNodo(driver, "Pelicula", pelicula);
+                    baseInicialDatos.crearNodo("Pelicula", pelicula);
                     nodosAgregados.add(pelicula);
                 }
 
@@ -74,7 +70,7 @@ public class BaseInicialDatos {
                     }
                 }
                 if (!directorEncontrado && !director.isEmpty()) {
-                    crearNodo(driver, "Director", director);
+                    baseInicialDatos.crearNodo("Director", director);
                     nodosAgregados.add(director);
                 }
 
@@ -89,7 +85,7 @@ public class BaseInicialDatos {
                     }
                 }
                 if (!actorEncontrado && !actor.isEmpty()) {
-                    crearNodo(driver, "Actor", actor);
+                    baseInicialDatos.crearNodo("Actor", actor);
                     nodosAgregados.add(actor);
                 }
 
@@ -104,12 +100,12 @@ public class BaseInicialDatos {
                     }
                 }
                 if (!generoEncontrado && !genero.isEmpty()) {
-                    crearNodo(driver, "Genero", genero);
+                    baseInicialDatos.crearNodo("Genero", genero);
                     nodosAgregados.add(genero);
                 }
 
                 // Establecer todas las relaciones
-                relacionesNodos(driver, pelicula, director, actor, genero);
+                baseInicialDatos.relacionesNodos(pelicula, director, actor, genero);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,7 +114,7 @@ public class BaseInicialDatos {
         driver.close();
     }
 
-    public static void crearNodo(Driver driver, String label, String name) {
+    public  void crearNodo( String label, String name) {
         String query = String.format("CREATE (n:%s {name: $name})", label);
         try (Session session = driver.session()) {
             session.writeTransaction(tx -> {
@@ -126,9 +122,12 @@ public class BaseInicialDatos {
                 return null;
             });
         }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void relacionesNodos(Driver driver, String pelicula, String director, String actor, String genero) {
+    public  void relacionesNodos(String pelicula, String director, String actor, String genero) {
         try (Session session = driver.session()) {
             // Relacion pelicula-director
             String query = "MATCH (p:Pelicula {name: $pelicula}), (d:Director {name: $director}) " +
@@ -144,13 +143,13 @@ public class BaseInicialDatos {
             query = "MATCH (p:Pelicula {name: $pelicula}), (g:Genero {name: $genero}) " +
                     "MERGE (p)-[:BELONGS_TO]->(g)";
             session.run(query, Map.of("pelicula", pelicula, "genero", genero));
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public static class DeleteAllNodesAndRelationships {
-        public static void main(String[] args) {
-            Driver driver = GraphDatabase.driver("neo4j+s://9c5d5c00.databases.neo4j.io", AuthTokens.basic("neo4j", "xgq5hyZRycODNp5U7cQuTg2GwIWNePhoKn4ZOLZoE30"));
-
+    public static void deleteAll() {
             try (Session session = driver.session()) {
                 session.writeTransaction(tx -> {
                     tx.run("MATCH (n) DETACH DELETE n");
@@ -160,7 +159,19 @@ public class BaseInicialDatos {
                 e.printStackTrace();
             } finally {
                 driver.close();
-            }
+            }   
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Elegir opción:");
+        System.out.println("1. Crear nodos y relaciones");
+        System.out.println("2. Borrar nodos y relaciones");
+        Scanner scanner = new Scanner(System.in);
+        int opcion = scanner.nextInt();
+        if (opcion == 1) {
+            createNodesandConnections();
+        } else if (opcion == 2) {
+            deleteAll();;
         }
     }
 }

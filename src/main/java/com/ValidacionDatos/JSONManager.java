@@ -2,10 +2,12 @@ package com.ValidacionDatos;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.BaseInicialDatos;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 
 public class JSONManager {
 
@@ -44,6 +46,9 @@ public class JSONManager {
 
     public void addNewUser() {
         JSONObject newData = new JSONObject();
+        BaseInicialDatos baseInicialDatos = new BaseInicialDatos("movies.csv");
+        CSVManager csvManager = new CSVManager("movies.csv");
+
         System.out.println("Ingrese su nombre de usuario:");
         Scanner scanner = new Scanner(System.in);
         String userName = scanner.nextLine();
@@ -52,17 +57,23 @@ public class JSONManager {
         for (int i = 0; i < 3; i++) {
             System.out.print("Ingrese la película favorita #" + (i + 1) + ": ");
             String movie = scanner.nextLine();
-            
-            if (APIMovies.getMovie(movie) != null) {
+
+            ArrayList<String> movieData = APIMovies.getMovieData(movie);
+
+            if (movieData != null) {
                 favoriteMovies.put(movie);
+                csvManager.turnArraytoData(movieData);
+                createNodesfromMovies(baseInicialDatos, movieData, movie);
+
             } else {
                 System.out.println("No se encontró información para la película " + movie);
-                System.out.println("Por favor, verifique que el título sea el correcto y  esté en ingles e intente nuevamente.");
-            
+                System.out.println(
+                        "Por favor, verifique que el título sea el correcto y  esté en ingles e intente nuevamente.");
+
                 i--;
                 continue;
             }
-           
+
         }
         newData.put("name", userName);
         newData.put("movies", favoriteMovies);
@@ -110,4 +121,25 @@ public class JSONManager {
     public JSONObject getJSONFile() {
         return jsonFile;
     }
+
+    public  static void createNodesfromMovies(BaseInicialDatos baseInicialDatos, ArrayList<String> movies, String movie) {
+        
+        ArrayList<String> movieData = APIMovies.getMovieData(movie);
+        if (movieData != null) {
+            String movieTitle = movieData.get(0);
+            String director = movieData.get(1);
+            String actor = movieData.get(2);
+            String genre = movieData.get(3);
+            baseInicialDatos.crearNodo("Pelicula", movieTitle);
+            baseInicialDatos.crearNodo("Director", director);
+            baseInicialDatos.crearNodo("Actor", actor);
+            baseInicialDatos.crearNodo("Genero",genre);
+            baseInicialDatos.relacionesNodos(movieTitle, director, actor, genre);
+        }
+    }
+
+    // public static void main(String[] args) {
+    //     JSONManager jsonManager = new JSONManager("pruebasneo4j\\src\\data\\users.json");
+    //     jsonManager.addNewUser();
+    // }
 }

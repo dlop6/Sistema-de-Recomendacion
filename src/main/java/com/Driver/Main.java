@@ -2,11 +2,12 @@ package com.Driver;
 
 import com.ExtracciónDatos.ExtractorInformacion;
 import com.ValidacionDatos.JSONManager;
+import com.ValidacionDatos.APIMovies;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Map;
-import java.util.HashMap;
+
 import org.json.JSONObject;
 
 public class Main {
@@ -29,7 +30,7 @@ public class Main {
             System.out.println("3. Salir del Programa");
             // Leer el nombre de usuario
             String opcion = scanner.nextLine();   
-            JSONManager newUser = new JSONManager("users.json");
+            JSONManager newUser = new JSONManager("pruebasneo4j\\src\\data\\users.json");
             // Verificar si el usuario ya existe en el sistema
             switch (opcion) {
                 case "1":
@@ -45,11 +46,9 @@ public class Main {
                         System.out.println("Bienvenido, " + user.getString("name"));
                         System.out.println("¿Listo para una nueva aventura?");
                         ArrayList<String> userMovies = newUser.getMoviesfromUser(user);
-
-                    //////Aquí Dieguito tiene que devolver el nombre de la película a usar con su información////////
-                        
-                        //Array de ejemplo, es lo que se esperaría para comenzar a trabajar
-                        String[] peliculaUsuario = {"Inception", "Christopher Nolan", "Leonardo DiCaprio", "Science Fiction"};
+                        ArrayList<String> movieData = APIMovies.getMovieData(userMovies.get(0));
+                        // El array se verá de la siguiente manera:
+                        // [Título, Director, Actor Principal, Género]
 
                         //Segundo Menú a Desplegar
                         while(systemON2){
