@@ -130,5 +130,39 @@ public class Main {
             }
         }
     }
+
+    /Método para Recomendación de películas completo
+    public static void getRecomendacionCompleta(Map<String, String[]> peliculasCompletas, String[] infoPeliculaUsuario){
+        for(int i = 3; i == 0; i--){
+            System.out.println("Películas que coinciden con " + i + " características de tu película seleccionada:");
+            System.out.println("----------------------------------------");
+            for(Map.Entry<String, String[]> entry : peliculasCompletas.entrySet()){
+                //Contador de las coincidencias encontradas
+                int contador = 0;
+
+                String peliculaEstudiada =  entry.getKey();
+                String[] infoPeliculaEstudiada = entry.getValue();
+
+                //Comparación de las pelícuals existentes
+                if(infoPeliculaUsuario[0].equals(infoPeliculaEstudiada[0])){
+                    contador++;
+                } if(infoPeliculaUsuario[1].equals(infoPeliculaEstudiada[1])){
+                    contador++;
+                } if(infoPeliculaUsuario[2].equals(infoPeliculaEstudiada[2])){
+                    contador++;
+                }
+
+                //Comparador de condición si la cantidad de coincidencias es igual a "i"
+                if(contador == i){
+                    System.out.println("--------------------------------------");
+                    System.out.println("Nombre Película: " + peliculaEstudiada);
+                    System.out.println("Director: " + infoPeliculaEstudiada[0]);
+                    System.out.println("Actor: " + infoPeliculaEstudiada[1]);
+                    System.out.println("Genero: " + infoPeliculaEstudiada[2]);
+                    System.out.println("--------------------------------------");
+                }
+            }
+        }
+    }
     
 }
