@@ -34,6 +34,7 @@ public class Main {
                 } else {
                     System.out.println("Bienvenido , " + user.getString("name"));
                     ArrayList<String> userMovies = newUser.getMoviesfromUser(user);
+                    
                     break;    
                 }
                 

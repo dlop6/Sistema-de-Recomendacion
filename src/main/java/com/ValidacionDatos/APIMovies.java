@@ -52,13 +52,15 @@ public class APIMovies {
             String director = jsonResponse.getString("Director");
             String actors = jsonResponse.getString("Actors");
             String genre = jsonResponse.getString("Genre");
+            
+            // Get only the first value of actors and genre
+            ArrayList<String> movieData = new ArrayList<>();
+            movieData.add(title);
+            movieData.add(director);
+            movieData.add(actors.split(",")[0]);
+            movieData.add(genre.split(",")[0]);
 
-            return new ArrayList<String>() {{
-                add(title);
-                add(director);
-                add(actors);
-                add(genre);
-            }};
+            return movieData;
 
         } catch (IOException e) {
             e.printStackTrace();
