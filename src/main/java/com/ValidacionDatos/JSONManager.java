@@ -138,8 +138,36 @@ public class JSONManager {
         }
     }
 
-    // public static void main(String[] args) {
-    //     JSONManager jsonManager = new JSONManager("pruebasneo4j\\src\\data\\users.json");
-    //     jsonManager.addNewUser();
-    // }
+    public static void main(String[] args) {
+        System.out.println("Ingresar tus películas favoritas: ");
+        BaseInicialDatos baseInicialDatos = new BaseInicialDatos("movies.csv");
+        CSVManager csvManager = new CSVManager("movies.csv");
+        JSONArray favoriteMovies = new JSONArray();
+        
+        Scanner scanner = new Scanner(System.in);
+        int numMovies = 10; // Change this value to the desired number of movies
+        
+        for (int i = 0; i < numMovies; i++) {
+            System.out.print("Ingrese la película favorita #" + (i + 1) + ": ");
+            String movie = scanner.nextLine();
+
+            ArrayList<String> movieData = APIMovies.getMovieData(movie);
+
+            if (movieData != null) {
+            favoriteMovies.put(movie);
+            csvManager.turnArraytoData(movieData);
+            createNodesfromMovies(baseInicialDatos, movieData, movie);
+
+            } else {
+            System.out.println("No se encontró información para la película " + movie);
+            System.out.println(
+                "Por favor, verifique que el título sea el correcto y esté en inglés e intente nuevamente.");
+
+            i--;
+            continue;
+            }
+        }
+        scanner.close();
+
+    }
 }

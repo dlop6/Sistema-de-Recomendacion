@@ -52,7 +52,7 @@ public class APIMovies {
             // Get only the first value of actors and genre
             ArrayList<String> movieData = new ArrayList<>();
             movieData.add(title);
-            movieData.add(director);
+            movieData.add(director. split(",")[0]);
             movieData.add(actors.split(",")[0]);
             movieData.add(genre.split(",")[0]);
 
