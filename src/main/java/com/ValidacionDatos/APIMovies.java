@@ -16,7 +16,6 @@ public class APIMovies {
 
 
     public static ArrayList<String> getMovie(String movieTitle) {
-       
 
         try {
             // Construir la URL para hacer la solicitud al servicio OMDB API

@@ -37,7 +37,6 @@ public class JSONManager {
     public void guardarJSONEnArchivo(JSONObject jsonObject, File file) {
         try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(jsonObject.toString(4)); // Indented with 4 spaces for better readability
-            System.out.println("JSON data appended to file: " + file.getName());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,7 +70,7 @@ public class JSONManager {
         if (findUser(newData.getString("name")) == null) {
             JSONArray users = jsonFile.getJSONArray("users");
             users.put(newData);
-            System.out.println("Usuario guarado exitosamente: " + newData.getString("name"));
+            System.out.println("Usuario guardado exitosamente: " + newData.getString("name"));
         } else {
             System.out.println("El usuario " + newData.getString("name") + " ya existe en el sistema.");
         }

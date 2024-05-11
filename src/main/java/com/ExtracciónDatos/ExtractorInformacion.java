@@ -1,7 +1,6 @@
 package com.ExtracciónDatos;
 
 import org.neo4j.driver.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
