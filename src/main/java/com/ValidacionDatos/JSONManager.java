@@ -3,29 +3,21 @@ package com.ValidacionDatos;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class JSONManager {
-    public static void main(String[] args) {
-        // Create or load the existing JSON file
-        File file = new File("pruebasneo4j\\data\\users.json");
 
-        // Read the existing JSON data from the file
-        JSONObject jsonObject = leerJSONDesdeArchivo(file);
+    private JSONObject jsonFile;
+    File file;
 
-        // Append new data
-        JSONObject newData = new JSONObject();
-        newData.put("name", "Maria");
-        newData.put("movies", new JSONArray(List.of("Movie1", "Movie2")));
-        newData.put("favorites", new JSONArray(List.of("Favorite1", "Favorite2")));
-
-        appendData(jsonObject, newData);
-
-        // Save the updated JSON to the file
-        guardarJSONEnArchivo(jsonObject, file);
+    public JSONManager(String fileName) {
+        file = new File(fileName);
+        jsonFile = leerJSONDesdeArchivo(file);
     }
 
-    public static JSONObject leerJSONDesdeArchivo(File file) {
+    public JSONObject leerJSONDesdeArchivo(File file) {
         JSONObject jsonObject;
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder jsonContent = new StringBuilder();
@@ -42,17 +34,81 @@ public class JSONManager {
         return jsonObject;
     }
 
-    public static void appendData(JSONObject jsonObject, JSONObject newData) {
-        JSONArray users = jsonObject.getJSONArray("users");
-        users.put(newData);
-    }
-
-    public static void guardarJSONEnArchivo(JSONObject jsonObject, File file) {
+    public void guardarJSONEnArchivo(JSONObject jsonObject, File file) {
         try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(jsonObject.toString(4)); // Indented with 4 spaces for better readability
             System.out.println("JSON data appended to file: " + file.getName());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addNewUser() {
+        JSONObject newData = new JSONObject();
+        System.out.println("Ingrese su nombre de usuario:");
+        Scanner scanner = new Scanner(System.in);
+        String userName = scanner.nextLine();
+        System.out.println("Ingresar tus 3 películas favoritas: ");
+        JSONArray favoriteMovies = new JSONArray();
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Ingrese la película favorita #" + (i + 1) + ": ");
+            String movie = scanner.nextLine();
+            
+            if (APIMovies.getMovie(movie) != null) {
+                favoriteMovies.put(movie);
+            } else {
+                System.out.println("No se encontró información para la película " + movie);
+                System.out.println("Por favor, verifique que el título sea el correcto y  esté en ingles e intente nuevamente.");
+            
+                i--;
+                continue;
+            }
+           
+        }
+        newData.put("name", userName);
+        newData.put("movies", favoriteMovies);
+        newData.put("saved", new JSONArray());
+        if (findUser(newData.getString("name")) == null) {
+            JSONArray users = jsonFile.getJSONArray("users");
+            users.put(newData);
+            System.out.println("Usuario guarado exitosamente: " + newData.getString("name"));
+        } else {
+            System.out.println("El usuario " + newData.getString("name") + " ya existe en el sistema.");
+        }
+        guardarJSONEnArchivo(jsonFile, file);
+        scanner.close();
+    }
+
+    public JSONObject findUser(String username) {
+        JSONArray users = jsonFile.getJSONArray("users");
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+            if (user.has("name") && user.getString("name").equals(username)) {
+                return user;
+            }
+        }
+        return null; // User not found
+    }
+
+    public ArrayList<String> getMoviesfromUser(JSONObject user) {
+        ArrayList<String> movies = new ArrayList<String>();
+        JSONArray moviesArray = user.getJSONArray("movies");
+        for (int i = 0; i < moviesArray.length(); i++) {
+            movies.add(moviesArray.getString(i));
+        }
+        return movies;
+    }
+
+    public ArrayList<String> getFavoritesfromUser(JSONObject user) {
+        ArrayList<String> favorites = new ArrayList<String>();
+        JSONArray favoritesArray = user.getJSONArray("saved");
+        for (int i = 0; i < favoritesArray.length(); i++) {
+            favorites.add(favoritesArray.getString(i));
+        }
+        return favorites;
+    }
+
+    public JSONObject getJSONFile() {
+        return jsonFile;
     }
 }

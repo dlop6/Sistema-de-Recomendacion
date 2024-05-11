@@ -4,21 +4,39 @@
             "Matrix",
             "Star Wars"
         ],
-        "favorites": [
+        "saved": [
             "Matrix",
             "Star Wars"
         ],
-        "User": "Pedro"
+        "name": "Pedro"
     },
     {
         "movies": [
             "Movie1",
             "Movie2"
         ],
-        "favorites": [
+        "saved": [
             "Favorite1",
             "Favorite2"
         ],
         "name": "Maria"
+    },
+    {
+        "movies": [
+            "Jojo Rabbit",
+            "The Avengers",
+            "Ex Machina"
+        ],
+        "saved": [],
+        "name": "dlop"
+    },
+    {
+        "movies": [
+            "JoJo Rabbit",
+            "The Godfather",
+            "Joker"
+        ],
+        "saved": [],
+        "name": "carlop"
     }
 ]}
