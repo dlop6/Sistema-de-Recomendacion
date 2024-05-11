@@ -164,5 +164,34 @@ public class Main {
             }
         }
     }
+
+     //Método para recomendación de películas por un solo criterio
+    public static void getRecomendacionCriterioUnico (Map<String, String[]> peliculasCompletas, String[] infoPeliculaUsuario, String tipoComparacion){
+        int indexArray = -1;
+        
+        if(tipoComparacion.equals("Director")){
+            indexArray = 0;
+        } else if(tipoComparacion.equals("Actor")){
+            indexArray = 1;
+        } else if(tipoComparacion.equals("Genero")){
+            indexArray = 2;
+        }
+
+        System.out.println("Recomendaciones por: " + tipoComparacion);
+        System.out.println("--------------------------------------\n");
+
+        //Se recorren las películas completas
+        for(Map.Entry<String, String[]> entry : peliculasCompletas.entrySet()){
+            String peliculaEstudiada =  entry.getKey();
+            String[] infoPeliculaEstudiada = entry.getValue();
+            if(infoPeliculaEstudiada[indexArray].equals(infoPeliculaUsuario[indexArray])){
+                System.out.println("--------------------------------------");
+                    System.out.println("Nombre Película: " + peliculaEstudiada);
+                    System.out.println("Director: " + infoPeliculaEstudiada[0]);
+                    System.out.println("Actor: " + infoPeliculaEstudiada[1]);
+                    System.out.println("Genero: " + infoPeliculaEstudiada[2]);
+                    System.out.println("--------------------------------------");
+            }
+        }
     
 }
