@@ -30,7 +30,7 @@ public class Main {
             System.out.println("3. Salir del Programa");
             // Leer el nombre de usuario
             String opcion = scanner.nextLine();   
-            JSONManager newUser = new JSONManager("users.json");
+            JSONManager newUser = new JSONManager("src\\data\\users.json");
             // Verificar si el usuario ya existe en el sistema
             switch (opcion) {
                 case "1":
@@ -47,14 +47,9 @@ public class Main {
                         System.out.println("Bienvenido, " + user.getString("name"));
                         System.out.println("¿Listo para una nueva aventura?\n");
                         ArrayList<String> userMovies = newUser.getMoviesfromUser(user);
-                        ArrayList<String> movieData = APIMovies.getMovieData(userMovies.get(0));
+                        String[] infoPeliculaUsuario = APIMovies.getMovieData(userMovies.get(0));
                         // El array se verá de la siguiente manera:
                         // [Título, Director, Actor Principal, Género]
-                        String[] infoPeliculaUsuario = new String[4];
-                        for(int i = 0; i < movieData.size(); i++){
-                            infoPeliculaUsuario[i] = obtenerPrimerNombre(movieData.get(i));
-                            System.out.println(obtenerPrimerNombre(movieData.get(i)));
-                        }
                         
                         //Segundo Menú a Desplegar
                         while(systemON2){

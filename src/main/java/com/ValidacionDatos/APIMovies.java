@@ -12,7 +12,7 @@ public class APIMovies {
 
     static String apiKey = "b02b9a4c";
 
-    public static ArrayList<String> getMovieData(String movieTitle) {
+    public static String[] getMovieData(String movieTitle) {
 
         try {
             // Construir la URL para hacer la solicitud al servicio OMDB API
@@ -50,11 +50,11 @@ public class APIMovies {
             String genre = jsonResponse.getString("Genre");
 
             // Get only the first value of actors and genre
-            ArrayList<String> movieData = new ArrayList<>();
-            movieData.add(title);
-            movieData.add(director. split(",")[0]);
-            movieData.add(actors.split(",")[0]);
-            movieData.add(genre.split(",")[0]);
+            String[] movieData = new String[4];
+            movieData[0] = title;
+            movieData[1] = director.split(",")[0];
+            movieData[2] = actors.split(",")[0];
+            movieData[3] = genre.split(",")[0];
 
             return movieData;
 

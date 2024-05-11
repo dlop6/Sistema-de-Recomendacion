@@ -2,7 +2,6 @@ package com.ValidacionDatos;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class CSVManager {
@@ -19,7 +18,7 @@ public class CSVManager {
         }
     }
 
-    public  void turnArraytoData(ArrayList<String> data) {
+    public  void turnArraytoData(String[] data) {
         try {
             StringBuilder csvData = new StringBuilder();
             for (String value : data) {
