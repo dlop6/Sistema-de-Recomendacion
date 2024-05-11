@@ -49,7 +49,11 @@ public class Main {
                         ArrayList<String> movieData = APIMovies.getMovieData(userMovies.get(0));
                         // El array se verá de la siguiente manera:
                         // [Título, Director, Actor Principal, Género]
-
+                        String[] infoPeliculaUsuario = new String[4];
+                        for(int i = 0; i < movieData.size(); i++){
+                            infoPeliculaUsuario[i] = movieData.get(i);
+                        }
+                        
                         //Segundo Menú a Desplegar
                         while(systemON2){
                             //Impresión de menú principal
@@ -58,39 +62,32 @@ public class Main {
                             System.out.println("2. Recomendación únicamente por género");
                             System.out.println("3. Recomendación únicamente por directo");
                             System.out.println("4. Recomendación únicamente por actor principal");
-                            //Esta opción se debe verificar si seguirá ocupando o no
-                            System.out.println("5. Agregar películas a tu lista de preferencias");
-                            System.out.println("6. Regresar al Menú Principal");
+                            System.out.println("5. Regresar al Menú Principal");
 
                             switch (opcion = scanner.nextLine()) {
                                 //Recomendación de Películas Personalizado
                                 case "1":
                                     //Colocar método para recomendación completa
+                                    getRecomendacionCompleta(dataPeliculas, infoPeliculaUsuario);
                                     break;
                             
                                 //Recomendación de Películas por género
                                 case "2":
-                                    //Colocar método para recomendación x género
+                                    getRecomendacionCriterioUnico(dataPeliculas, infoPeliculaUsuario, "Genero");
                                     break;
 
                                 //Recomendación de Películas por director
                                 case "3":
-                                    //Colocar método para recomendación x director
+                                    getRecomendacionCriterioUnico(dataPeliculas, infoPeliculaUsuario, "Director");
                                     break;
 
                                 //Recomendación de Películas por actor
                                 case "4":
-                                    //Colocar método para recomendación x actor
-                                    break;
+                                getRecomendacionCriterioUnico(dataPeliculas, infoPeliculaUsuario, "Actor");
+                                break;
 
-                                //Generar una lista de favoritos (OPCIONAL)
-                                case "5":
-                                    //PRIMERO DECIDAMOS SI LO HACEMOS O NO
-                                    //ES EXTRA
-                                    break;
-                                
                                 //Regresar al menú principal
-                                case "6":
+                                case "5":
                                     System.out.println("Esperamos haberte ayudado!!!\n");
                                     System.out.println("----- regresando al menú principal -----");
                                     systemON2 = false;
@@ -131,7 +128,7 @@ public class Main {
         }
     }
 
-    /Método para Recomendación de películas completo
+    //Método para Recomendación de películas completo
     public static void getRecomendacionCompleta(Map<String, String[]> peliculasCompletas, String[] infoPeliculaUsuario){
         for(int i = 3; i == 0; i--){
             System.out.println("Películas que coinciden con " + i + " características de tu película seleccionada:");
@@ -193,5 +190,5 @@ public class Main {
                     System.out.println("--------------------------------------");
             }
         }
-    
+    }
 }
