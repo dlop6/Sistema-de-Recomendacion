@@ -86,7 +86,6 @@ public class JSONManager {
             System.out.println("El usuario " + newData.getString("name") + " ya existe en el sistema.");
         }
         guardarJSONEnArchivo(jsonFile, file);
-        scanner.close();
     }
 
     public JSONObject findUser(String username) {

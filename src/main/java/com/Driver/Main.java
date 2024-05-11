@@ -66,6 +66,7 @@ public class Main {
                                 //Recomendación de Películas Personalizado
                                 case "1":
                                     //Colocar método para recomendación completa
+                                    System.out.println();
                                     getRecomendacionCompleta(dataPeliculas, infoPeliculaUsuario);
                                     break;
                             
@@ -106,7 +107,7 @@ public class Main {
                     //EN ESTÁ PARTE SE TIENE QUE VALIDAR QUE LA PELÍCULA A USAR SEA AGREGADA A NEO4J
                     System.out.println("-----------------------------------------");
                     newUser.addNewUser();
-                    System.out.println("Usuario creado exitosamente.");
+                    System.out.println();
                     System.out.println("A continuación, tendrás que iniciar sesión.");
                     System.out.println("Regresando al Menú Principal...\n\n");
                     System.out.println("-----------------------------------------");
@@ -128,8 +129,9 @@ public class Main {
 
     //Método para Recomendación de películas completo
     public static void getRecomendacionCompleta(Map<String, String[]> peliculasCompletas, String[] infoPeliculaUsuario){
+        System.out.println();
         for(int i = 3; i > 0; i--){
-            System.out.println("Películas que coinciden con " + i + " características de tu película seleccionada:\n");
+            System.out.println("Películas que coinciden con " + i + " características de tu película seleccionada:");
             System.out.println("---------------------------------------------------------------------------------");
             for(Map.Entry<String, String[]> entry : peliculasCompletas.entrySet()){
                 //Contador de las coincidencias encontradas
@@ -158,7 +160,7 @@ public class Main {
                 }
             }
         }
-        System.out.println("\nSi no se ha mostrado nada, es porque no se han encontrado películas para recomendarle...");
+        System.out.println("Si no se ha mostrado nada, es porque no se han encontrado películas para recomendarle...");
         System.out.println("Vuelva a intenterlo más tarde!!!\n");
     }
 
@@ -175,7 +177,7 @@ public class Main {
             indexArray = 2;
         }
 
-        System.out.println("Recomendaciones por: " + tipoComparacion);
+        System.out.println("\nRecomendaciones por: " + tipoComparacion);
         System.out.println("---------------------------------------------------------------------------------");
 
         //Se recorren las películas completas
@@ -193,7 +195,7 @@ public class Main {
             }
         }
         if(contadorPeliculasEncontradas == 0) {
-            System.out.println("Lamentablemente no hemos encontrado películas para mostrarte :(\n\n");
+            System.out.println("Lamentablemente no hemos encontrado películas para mostrarte :(\n");
         }
 
     }
