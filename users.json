@@ -1,0 +1,47 @@
+{"users": [
+    {
+        "movies": [
+            "The Incredibles",
+            "hola",
+            "Dunkirk"
+        ],
+        "saved": [],
+        "name": "Juan"
+    },
+    {
+        "movies": [
+            "The Master",
+            "Gladiador",
+            "Two Lovers"
+        ],
+        "saved": [],
+        "name": "Felipe"
+    },
+    {
+        "movies": [
+            "Wanted Man",
+            "The Book of Life",
+            "Shrek"
+        ],
+        "saved": [],
+        "name": "Francia"
+    },
+    {
+        "movies": [
+            "Shrek",
+            "Shrek 2",
+            "Spirit"
+        ],
+        "saved": [],
+        "name": "Mario"
+    },
+    {
+        "movies": [
+            "Shrek",
+            "Shrek 2",
+            "The Incredibles"
+        ],
+        "saved": [],
+        "name": "Juan2"
+    }
+]}

@@ -1,0 +1,27 @@
+1. Recopilación de datos:
+   - Obtener datos de películas que incluyan información sobre director, actor principal y género.
+
+2. Construcción del grafo:
+   - Crear un nodo para cada película.
+   - Para cada película, asignar atributos de director, actor principal y género.
+   - Crear conexiones de películas con atributos similares (por ejemplo, películas con el mismo director, mismo actor principal o mismo género).
+
+3. Definición de métricas de similitud:
+   - Métrica de similitud entre películas basada en director:
+     - Calcular la similitud entre dos películas basada en el director (por ejemplo, distancia de Levenshtein para nombres de directores).
+   - Métrica de similitud entre películas basada en actor principal:
+     - Calcular la similitud entre dos películas basada en el actor principal (por ejemplo, coincidencia de nombres exactos o similaridad de nombres).
+   - Métrica de similitud entre películas basada en género:
+     - Calcular la similitud entre dos películas basada en el género (por ejemplo, coincidencia exacta de géneros o medida de similitud de Jaccard).
+
+4. Algoritmo de recomendación:
+   - Para un usuario dado y una película de interés:
+     - Obtener las películas similares en función de las métricas de similitud definidas para director, actor principal y género.
+     - Ponderar la similitud de cada película y calcular una puntuación de recomendación.
+     - Ordenar las películas por puntuación y devolver las mejores como recomendaciones.
+
+5. Optimización y ajuste:
+   - Experimentar con diferentes métricas de similitud y parámetros del sistema para mejorar el rendimiento.
+
+6. Despliegue:
+   - Desplegar el sistema en un entorno de producción para que los usuarios puedan recibir recomendaciones personalizadas.
