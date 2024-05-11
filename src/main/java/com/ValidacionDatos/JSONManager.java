@@ -58,7 +58,7 @@ public class JSONManager {
             System.out.print("Ingrese la película favorita #" + (i + 1) + ": ");
             String movie = scanner.nextLine();
 
-            ArrayList<String> movieData = APIMovies.getMovieData(movie);
+            String[] movieData = APIMovies.getMovieData(movie);
 
             if (movieData != null) {
                 favoriteMovies.put(movie);
@@ -122,14 +122,14 @@ public class JSONManager {
         return jsonFile;
     }
 
-    public  static void createNodesfromMovies(BaseInicialDatos baseInicialDatos, ArrayList<String> movies, String movie) {
+    public  static void createNodesfromMovies(BaseInicialDatos baseInicialDatos, String[] movies, String movie) {
         
-        ArrayList<String> movieData = APIMovies.getMovieData(movie);
+        String [] movieData = APIMovies.getMovieData(movie);
         if (movieData != null) {
-            String movieTitle = movieData.get(0);
-            String director = movieData.get(1);
-            String actor = movieData.get(2);
-            String genre = movieData.get(3);
+            String movieTitle = movieData[0];
+            String director = movieData[1];
+            String actor = movieData[2];
+            String genre = movieData[3];
             baseInicialDatos.crearNodo("Pelicula", movieTitle);
             baseInicialDatos.crearNodo("Director", director);
             baseInicialDatos.crearNodo("Actor", actor);
@@ -151,7 +151,7 @@ public class JSONManager {
             System.out.print("Ingrese la película favorita #" + (i + 1) + ": ");
             String movie = scanner.nextLine();
 
-            ArrayList<String> movieData = APIMovies.getMovieData(movie);
+            String[] movieData = APIMovies.getMovieData(movie);
 
             if (movieData != null) {
             favoriteMovies.put(movie);
