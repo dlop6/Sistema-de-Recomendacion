@@ -10,7 +10,7 @@ public class CSVManager {
     private static FileWriter fileWriter;
 
     public CSVManager(String fileName) {
-        String filePath = "pruebasneo4j\\src\\data\\" + fileName;
+        String filePath = "src\\data\\" + fileName;
 
         try {
             fileWriter = new FileWriter(filePath, true);

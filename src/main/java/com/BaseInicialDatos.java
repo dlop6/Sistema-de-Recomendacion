@@ -16,7 +16,7 @@ public class BaseInicialDatos {
 
 
     public BaseInicialDatos(String fileName) {
-        csvFile = "pruebasneo4j\\src\\data\\" + fileName;
+        csvFile = "src\\data\\" + fileName;
         
         driver = GraphDatabase.driver(
                 "neo4j+s://9c5d5c00.databases.neo4j.io", //"bolt://localhost:7687",
