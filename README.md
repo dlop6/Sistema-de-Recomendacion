@@ -6,6 +6,16 @@ Peliflix es un proyecto de software desarrollado como parte de un proyecto unive
 
 El objetivo principal de Peliflix es proporcionar a los usuarios recomendaciones de películas personalizadas basadas en sus preferencias. El sistema recopila información sobre las películas que ha visto el usuario y utiliza estos datos para sugerir nuevas películas que podrían ser de su interés.
 
+## Explicación del algoritmo
+El algoritmo de recomendación de películas implementado en el sistema utiliza un enfoque de filtrado colaborativo basado en memoria para proporcionar recomendaciones personalizadas. Este enfoque se basa en comparar las características de las películas vistas por el usuario con un conjunto de películas disponibles en la base de datos. El algoritmo consta de dos métodos principales: getRecomendacionCompleta y getRecomendacionCriterioUnico.
+
+El método getRecomendacionCompleta analiza cada película en la base de datos comparándola con un conjunto de características proporcionadas por el usuario (director, actor, género) en tres grupos diferentes. Clasifica las películas según el número de coincidencias (1, 2 o 3) y selecciona al azar hasta cinco películas de cada grupo de coincidencias para mostrar al usuario. Esto asegura que las recomendaciones sean variadas y relevantes, maximizando la probabilidad de que el usuario encuentre algo de su interés.
+
+El método getRecomendacionCriterioUnico se enfoca en un solo tipo de característica (director, actor o género) y compara cada película del conjunto con las características del usuario en el índice correspondiente. Las coincidencias se almacenan en una lista y se seleccionan hasta cinco películas al azar para presentar al usuario, proporcionando recomendaciones basadas en un único criterio específico.
+
+Este enfoque de filtrado colaborativo basado en memoria permite que las recomendaciones se generen de manera eficiente y personalizada, aprovechando la similitud entre las películas para ofrecer opciones relevantes al usuario. La inclusión de un componente aleatorio en la selección de películas ayuda a garantizar que las recomendaciones sean diversas, incluso cuando muchas películas cumplen con los criterios de coincidencia.
+
+
 ## Características Principales
 
 - **Inicio de Sesión y Registro:** Los usuarios pueden iniciar sesión con sus nombres de usuario existentes o registrarse como nuevos usuarios.
