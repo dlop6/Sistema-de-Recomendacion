@@ -197,9 +197,9 @@ public class Main {
     }
 
      //Método para recomendación de películas por un solo criterio
-    public static void getRecomendacionCriterioUnico (Map<String, String[]> peliculasCompletas, String[] infoPeliculaUsuario, String tipoComparacion){
+     public static void getRecomendacionCriterioUnico(Map<String, String[]> peliculasCompletas, String[] infoPeliculaUsuario, String tipoComparacion) {
+        Random rand = new Random();
         int indexArray = -1;
-        int contadorPeliculasEncontradas = 0;
 
         if(tipoComparacion.equals("Director")){
             indexArray = 0;
@@ -209,27 +209,41 @@ public class Main {
             indexArray = 2;
         }
 
+        List<String> peliculasCoincidentes = new ArrayList<>();
+
         System.out.println("\nRecomendaciones por: " + tipoComparacion);
         System.out.println("---------------------------------------------------------------------------------");
 
-        //Se recorren las películas completas
-        for(Map.Entry<String, String[]> entry : peliculasCompletas.entrySet()){
-            String peliculaEstudiada =  entry.getKey();
+        // Se recorren las películas completas
+        for (Map.Entry<String, String[]> entry : peliculasCompletas.entrySet()) {
+            String peliculaEstudiada = entry.getKey();
             String[] infoPeliculaEstudiada = entry.getValue();
-            if(infoPeliculaEstudiada[indexArray].equals(infoPeliculaUsuario[indexArray+1])){
-                System.out.println("--------------------------------------");
-                    System.out.println("Nombre Película: " + peliculaEstudiada);
-                    System.out.println("Director: " + infoPeliculaEstudiada[0]);
-                    System.out.println("Actor: " + infoPeliculaEstudiada[1]);
-                    System.out.println("Genero: " + infoPeliculaEstudiada[2]);
-                    System.out.println("--------------------------------------");
-                    contadorPeliculasEncontradas++;
+
+            // Verificar coincidencias con los tres grupos
+            for (int i = 0; i < infoPeliculaUsuario.length; i += 3) {
+                if (infoPeliculaUsuario[i + indexArray].equals(infoPeliculaEstudiada[indexArray])) {
+                    peliculasCoincidentes.add(peliculaEstudiada);
+                    break; // salir del bucle interno para evitar duplicados
+                }
             }
         }
-        if(contadorPeliculasEncontradas == 0) {
-            System.out.println("Lamentablemente no hemos encontrado películas para mostrarte :(\n");
-        }
 
+        if (peliculasCoincidentes.isEmpty()) {
+            System.out.println("Lamentablemente no hemos encontrado películas para mostrarte :(\n");
+        } else {
+            // Seleccionar aleatoriamente hasta 5 películas
+            Collections.shuffle(peliculasCoincidentes, rand);
+            for (int i = 0; i < Math.min(5, peliculasCoincidentes.size()); i++) {
+                String peliculaEstudiada = peliculasCoincidentes.get(i);
+                String[] infoPeliculaEstudiada = peliculasCompletas.get(peliculaEstudiada);
+                System.out.println("--------------------------------------");
+                System.out.println("Nombre Película: " + peliculaEstudiada);
+                System.out.println("Director: " + infoPeliculaEstudiada[0]);
+                System.out.println("Actor: " + infoPeliculaEstudiada[1]);
+                System.out.println("Genero: " + infoPeliculaEstudiada[2]);
+                System.out.println("--------------------------------------");
+            }
+        }
     }
 
     //Método para solo trabajar con un elemento
