@@ -1,5 +1,6 @@
 package com.ValidacionDatos;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,17 +45,15 @@ public class APIMovies {
             }
 
             // Extraer los datos del título, director, actores y género de la película
-            String title = jsonResponse.getString("Title");
             String director = jsonResponse.getString("Director");
             String actors = jsonResponse.getString("Actors");
             String genre = jsonResponse.getString("Genre");
 
             // Get only the first value of actors and genre
-            String[] movieData = new String[4];
-            movieData[0] = title;
-            movieData[1] = director.split(",")[0];
-            movieData[2] = actors.split(",")[0];
-            movieData[3] = genre.split(",")[0];
+            String[] movieData = new String[3];
+            movieData[0] = director.split(",")[0];
+            movieData[1] = actors.split(",")[0];
+            movieData[2] = genre.split(",")[0];
 
             return movieData;
 
@@ -63,6 +62,25 @@ public class APIMovies {
             return null;
 
         }
+    }
+
+    public static String [] getAllMovieData(JSONObject user){
+        JSONArray userMovies = user.getJSONArray("movies");
+        String[] movieData = new String[9];
+        int count = 0;
+        for (int i = 0; i < userMovies.length(); i++) {
+
+            String movie = userMovies.getString(i);
+            String[] data = getMovieData(movie);
+            if (data != null) {
+                movieData[count] = data[0];
+                movieData[count + 1] = data[1];
+                movieData[count + 2] = data[2];
+            }
+            count += 3;
+        }
+        return movieData;
+
     }
 
 }

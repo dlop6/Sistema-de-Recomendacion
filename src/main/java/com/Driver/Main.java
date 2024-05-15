@@ -16,7 +16,8 @@ import java.util.random.*;
 import org.json.JSONObject;
 
 public class Main {
-    private static JSONObject user = new JSONObject();
+    private static JSONObject user;
+    private static String username;
     private static ExtractorInformacion extractorData = new ExtractorInformacion();
 
     public static void main(String[] args) {
@@ -41,7 +42,8 @@ public class Main {
                 case "1":
                     System.out.println("-----------------------------------------");
                     System.out.println("Ingrese su nombre de usuario:");
-                    JSONObject user = newUser.findUser(scanner.nextLine());
+                    user = newUser.findUser(scanner.nextLine());
+                    username = user.getString("name");
                     if (user == null) {
                         System.out.println("El usuario no existe en el sistema.\n");
                         break;
@@ -51,8 +53,8 @@ public class Main {
                         System.out.println("\n\n--------------------------------------------");
                         System.out.println("Bienvenido, " + user.getString("name"));
                         System.out.println("¿Listo para una nueva aventura?\n");
-                        ArrayList<String> userMovies = newUser.getMoviesfromUser(user);
-                        String[] infoPeliculaUsuario = APIMovies.getMovieData(userMovies.get(0));
+                        String[] infoPeliculaUsuario = APIMovies.getAllMovieData(user);
+
                         // El array se verá de la siguiente manera:
                         // [Título, Director, Actor Principal, Género]
                         
