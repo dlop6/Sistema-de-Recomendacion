@@ -55,6 +55,10 @@ public class Main {
                         System.out.println("¿Listo para una nueva aventura?\n");
                         String[] infoPeliculaUsuario = APIMovies.getAllMovieData(user);
 
+                        for(int i=0; i<infoPeliculaUsuario.length; i++) {
+                            infoPeliculaUsuario[i] = obtenerPrimerNombre(infoPeliculaUsuario[i]);
+                        }
+
                         // El array se verá de la siguiente manera:
                         // [Título, Director, Actor Principal, Género]
                         
