@@ -5,8 +5,13 @@ import com.ValidacionDatos.JSONManager;
 import com.ValidacionDatos.APIMovies;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Map;
+import java.util.Random;
+import java.util.random.*;
 
 import org.json.JSONObject;
 
@@ -128,29 +133,56 @@ public class Main {
     }
 
     //Método para Recomendación de películas completo
-    public static void getRecomendacionCompleta(Map<String, String[]> peliculasCompletas, String[] infoPeliculaUsuario){
-        System.out.println();
-        for(int i = 3; i > 0; i--){
-            System.out.println("Películas que coinciden con " + i + " características de tu película seleccionada:");
-            System.out.println("---------------------------------------------------------------------------------");
-            for(Map.Entry<String, String[]> entry : peliculasCompletas.entrySet()){
-                //Contador de las coincidencias encontradas
-                int contador = 0;
+    public static void getRecomendacionCompleta(Map<String, String[]> peliculasCompletas, String[] infoPeliculaUsuario) {
+        Random rand = new Random();
 
-                String peliculaEstudiada =  entry.getKey();
-                String[] infoPeliculaEstudiada = entry.getValue();
+        // Almacenamiento de películas según coincidencias
+        Map<Integer, List<String>> coincidenciasPeliculas = new HashMap<>();
 
-                //Comparación de las pelícuals existentes
-                if(infoPeliculaUsuario[0+1].equals(infoPeliculaEstudiada[0])){
-                    contador++;
-                } if(infoPeliculaUsuario[1+1].equals(infoPeliculaEstudiada[1])){
-                    contador++;
-                } if(infoPeliculaUsuario[2+1].equals(infoPeliculaEstudiada[2])){
-                    contador++;
+        for (int i = 3; i > 0; i--) {
+            coincidenciasPeliculas.put(i, new ArrayList<>());
+        }
+
+        for (Map.Entry<String, String[]> entry : peliculasCompletas.entrySet()) {
+            String peliculaEstudiada = entry.getKey();
+            String[] infoPeliculaEstudiada = entry.getValue();
+
+            // Inicializa el contador de coincidencias
+            int maxCoincidencias = 0;
+
+            // Verificar coincidencias con los tres grupos
+            for (int i = 0; i < infoPeliculaUsuario.length; i += 3) {
+                int coincidencias = 0;
+                if (infoPeliculaUsuario[i].equals(infoPeliculaEstudiada[0])) {
+                    coincidencias++;
                 }
+                if (infoPeliculaUsuario[i + 1].equals(infoPeliculaEstudiada[1])) {
+                    coincidencias++;
+                }
+                if (infoPeliculaUsuario[i + 2].equals(infoPeliculaEstudiada[2])) {
+                    coincidencias++;
+                }
+                maxCoincidencias = Math.max(maxCoincidencias, coincidencias);
+            }
 
-                //Comparador de condición si la cantidad de coincidencias es igual a "i"
-                if(contador == i){
+            // Almacenar la película según la cantidad de coincidencias
+            if (maxCoincidencias > 0) {
+                coincidenciasPeliculas.get(maxCoincidencias).add(peliculaEstudiada);
+            }
+        }
+
+        // Mostrar resultados
+        for (int i = 3; i > 0; i--) {
+            List<String> peliculasConCoincidencias = coincidenciasPeliculas.get(i);
+            if (!peliculasConCoincidencias.isEmpty()) {
+                System.out.println("Películas que coinciden con " + i + " características de tu película seleccionada:");
+                System.out.println("---------------------------------------------------------------------------------");
+
+                // Seleccionar al azar hasta 5 películas
+                Collections.shuffle(peliculasConCoincidencias, rand);
+                for (int j = 0; j < Math.min(5, peliculasConCoincidencias.size()); j++) {
+                    String peliculaEstudiada = peliculasConCoincidencias.get(j);
+                    String[] infoPeliculaEstudiada = peliculasCompletas.get(peliculaEstudiada);
                     System.out.println("--------------------------------------");
                     System.out.println("Nombre Película: " + peliculaEstudiada);
                     System.out.println("Director: " + infoPeliculaEstudiada[0]);
@@ -161,7 +193,7 @@ public class Main {
             }
         }
         System.out.println("Si no se ha mostrado nada, es porque no se han encontrado películas para recomendarle...");
-        System.out.println("Vuelva a intenterlo más tarde!!!\n");
+        System.out.println("Vuelva a intentarlo más tarde!!!\n");
     }
 
      //Método para recomendación de películas por un solo criterio
